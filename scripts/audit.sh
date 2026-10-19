@@ -33,5 +33,11 @@ check "Сертификат действителен >30 дней" "0" "$(sudo o
 check "Нет файлов доступных на запись всем" "" "$(find /var/www/devops-site -perm -o+w)"
 check "Права ключа 600" "600" "$(sudo stat -c '%a' /etc/ssl/private/devops.key)"
 
+echo "[5] Контейнеризация"
+check "Служба Docker активна" "active" "$(systemctl is-active docker)"
+check "Контейнер СУБД в статусе healthy" "healthy" "$(docker inspect -f '{{.State.Health.Status}}' app-db-1 2>/dev/null)"
+check "Порты 5000 и 5432 не слушаются наружу" "" "$(ss -tln | grep -E ':(5000|5432)\b' | grep -v '127.0.0.1' | grep -v '\[::1\]')"
+check "Права файла .env равны 600" "600" "$(stat -c '%a' ~/app/.env 2>/dev/null)"
+
 echo "Пройдено: $PASS, не пройдено: $FAIL"
 [[ $FAIL -eq 0 ]] && exit 0 || exit 1

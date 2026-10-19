@@ -41,3 +41,11 @@
 - Путь к ключу: /etc/ssl/private/devops.key, права 600, владелец root
 - Команда формирования сертификата: sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/devops.key -out /etc/ssl/certs/devops.crt -subj "/CN=devops.local" -addext "subjectAltName=DNS:devops.local"
 - Срок действия сертификата: 365 дней
+## 9. Контейнеризация
+- Способ установки Docker Engine: официальный репозиторий Docker (docker-ce).
+- Участники группы docker: пользователь devops.
+- Расположение проекта на сервере: /home/devops/app.
+- Расположение файла .env: /home/devops/app/.env, права 600.
+- Публикуемые порты и адреса: приложение доступно только на 127.0.0.1:5000 (через Nginx проксируется по адресу https://devops.local/app/).
+- Именованные тома: app_db_data (для хранения данных PostgreSQL).
+- Конфигурация обратного прокси-сервера: Nginx проксирует запросы с /app/ на http://127.0.0.1:5000/.
