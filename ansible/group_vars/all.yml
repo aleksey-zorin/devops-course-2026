@@ -1,0 +1,5 @@
+app_image: "ghcr.io/aleksey-zorin/devops-ci-app"
+app_tag: "4efb968e50bb7a37544f7542f3812ebfa07bcb6a"
+app_container_name: "devops-ci-app"
+app_host_port: 5000
+app_internal_port: 5000
